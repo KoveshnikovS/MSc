@@ -1,0 +1,57 @@
+# Type dvc-help in this file and hit enter to get more information on how the extension can help to setup pipelines
+stages:
+  Features:
+    cmd: python src/stages/features.py --config=params.yaml
+    deps:
+      - src/stages/features.py
+    params:
+      - features.fft_window_func
+      - features.fft_window_size
+      - features.fft_window_num
+    outs:
+      - Data/raw/dataset.csv
+
+  Data: # delete ceratain level from training set
+    always_changed: True
+    cmd: python src/stages/del_load.py --config=params.yaml
+    deps:
+      - src/stages/del_load.py
+    params:
+      - data_split.load_exclude
+    outs:
+      - Data/processed/X_train.csv
+      - Data/processed/y_train.csv
+      - Data/processed/X_test.csv
+      - Data/processed/y_test.csv
+
+  Training: # model training
+    always_changed: True
+    cmd: python src/stages/train.py --config=params.yaml
+    deps:
+      - src/stages/train.py
+      - Data/processed/X_train.csv
+      - Data/processed/y_train.csv
+      - Data/processed/X_test.csv
+      - Data/processed/y_test.csv
+    params:
+      - train.estimator_name
+      - data_split.load_exclude
+    metrics:
+      - reports/best_hp.json
+
+  Evaluation: # evaluate model and save plots/reports
+    always_changed: True
+    cmd: python src/stages/evaluate.py --config=params.yaml
+    deps:
+      - src/stages/evaluate.py
+      - Saved models/model/
+      - Data/processed/X_test.csv
+      - Data/processed/y_test.csv
+    plots:
+    - reports/confusion_matrix.png
+    - reports/confusion_matrix_data.csv:
+        template: confusion
+        x: predicted
+        y: y_true
+    metrics:
+      - reports/metrics.json

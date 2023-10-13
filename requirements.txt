@@ -1,0 +1,11 @@
+pandas==2.0.3
+numpy==1.23.5
+matplotlib==3.7.2
+seaborn==0.12.2
+scikit-learn==1.2.2
+tensorflow==2.13.0
+shap==0.41.0
+eli5==0.13.0
+jupyter==1.0.0
+scipy==1.11.1
+h5py==3.8.0

@@ -1,0 +1,105 @@
+base:
+# basis vars
+  random_state: 0
+  log_level: INFO
+  grid_frequency: 60 #motor supply frequency
+
+features:
+  fft_window_func: None   #['None','blackman','hamming','hanning','flattop']
+  fft_window_size: 20 #int cycles in 1 fft_window 
+  fft_window_num: 40 #int number of fft_windows, i.e. datapoints per dataset per experiment 
+
+data:
+# data IOs
+  features: Data/raw/dataset.csv   # dataset with features+load levels+lables to load
+
+data_split:
+# sets for data split and modifications
+  X_trainset_path: Data/processed/X_train.csv
+  y_trainset_path: Data/processed/y_train.csv
+  X_testset_path: Data/processed/X_test.csv
+  y_testset_path: Data/processed/y_test.csv
+  test_size: 0.2
+  load_exclude: []
+
+train:
+# training params
+  cv: 5
+  estimator_name: DL_reg   # define estimator name ['SVC', 'GBC', 'DL','DL_reg']
+  model_path: Models/model.joblib   # define path, where model saved
+  gridCV_file: best_hp.json   # best params of grid search
+  estimators:
+    SVC: # sklearn.svm.SVC
+      param_grid: # params of GridSearchCV constructor
+        SVC__C:
+        - 0.00001
+        - 0.0001
+        - 0.001
+        - 0.01
+        - 0.1
+        - 1
+        - 10
+        - 100
+        - 1000
+        SVC__gamma:
+        - 0.00001
+        - 0.0001
+        - 0.001
+        - 0.01
+        - 0.1
+        - 1
+        - 10
+        - 100
+        - 1000
+        SVC__decision_function_shape:
+        - ovr
+        SVC__probability:
+        - true
+    GBC: # sklearn.ensemble.GradientBoostingClassifier
+      param_grid:
+        GBC__n_estimators:
+        - 200
+        GBC__max_depth:
+        - 6
+        - 9
+        GBC__learning_rate:
+        - 0.1
+        - 0.2
+        GBC__subsample:
+        - 0.3
+        - 0.7
+        GBC__validation_fraction:
+        - 0.2
+        GBC__tol:
+        - 0.01
+        GBC__n_iter_no_change:
+        - 50
+        GBC__random_state:
+        - 0
+    DL:
+      model_path: Models/DLmodel.keras
+      fit_hp:
+        batch_size: 16
+        epochs: 128
+      early_stoppings:
+        patience: 10
+        min_delta: 0.001
+        restore_best_weights: true
+        start_epoch: 25
+    DL_reg:
+      model_path: Models/DLmodel.keras
+      fit_hp:
+        batch_size: 16
+        epochs: 128
+      early_stoppings:
+        patience: 10
+        min_delta: 0.001
+        restore_best_weights: true
+        start_epoch: 25
+
+evaluate:
+  reports_dir: reports
+  metrics_file: metrics.json
+  confusion_matrix_image: confusion_matrix.png
+  confusion_matrix_data: confusion_matrix_data.csv
+
