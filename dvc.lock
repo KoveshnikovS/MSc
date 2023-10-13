@@ -1,0 +1,111 @@
+schema: '2.0'
+stages:
+  Features:
+    cmd: python src/stages/features.py --config=params.yaml
+    deps:
+    - path: src/stages/features.py
+      hash: md5
+      md5: eab634ef0f0de4d39ec5077c3432cd57
+      size: 3250
+    params:
+      params.yaml:
+        features.fft_window_func: None
+        features.fft_window_num: 40
+        features.fft_window_size: 20
+    outs:
+    - path: Data/raw/dataset.csv
+      hash: md5
+      md5: 342a9a5193de1cb8500437e26d3195b9
+      size: 576337
+  Data:
+    cmd: python src/stages/del_load.py --config=params.yaml
+    deps:
+    - path: src/stages/del_load.py
+      hash: md5
+      md5: c5e8e68fd674043ffb47d870300684c8
+      size: 4332
+    params:
+      params.yaml:
+        data_split.load_exclude: []
+    outs:
+    - path: Data/processed/X_test.csv
+      hash: md5
+      md5: bd3403be117c006798f010c968b74269
+      size: 110771
+    - path: Data/processed/X_train.csv
+      hash: md5
+      md5: 893a2433c3aafebcc1c65013904df166
+      size: 442368
+    - path: Data/processed/y_test.csv
+      hash: md5
+      md5: 2e66d8c3c94231ddf9fab50a84d50563
+      size: 967
+    - path: Data/processed/y_train.csv
+      hash: md5
+      md5: cae16f39e5ded9cab2acfcd2ffb9fc6f
+      size: 3847
+  Training:
+    cmd: python src/stages/train.py --config=params.yaml
+    deps:
+    - path: Data/processed/X_test.csv
+      hash: md5
+      md5: bd3403be117c006798f010c968b74269
+      size: 110771
+    - path: Data/processed/X_train.csv
+      hash: md5
+      md5: 893a2433c3aafebcc1c65013904df166
+      size: 442368
+    - path: Data/processed/y_test.csv
+      hash: md5
+      md5: 2e66d8c3c94231ddf9fab50a84d50563
+      size: 967
+    - path: Data/processed/y_train.csv
+      hash: md5
+      md5: cae16f39e5ded9cab2acfcd2ffb9fc6f
+      size: 3847
+    - path: src/stages/train.py
+      hash: md5
+      md5: 66d0851c3b7605ba80e5d57f2f02009a
+      size: 3361
+    params:
+      params.yaml:
+        data_split.load_exclude: []
+        train.estimator_name: DL_reg
+    outs:
+    - path: reports/best_hp.json
+      hash: md5
+      md5: e9a0e4c40b5a91f8be67c44af4cb4418
+      size: 15
+  Evaluation:
+    cmd: python src/stages/evaluate.py --config=params.yaml
+    deps:
+    - path: Data/processed/X_test.csv
+      hash: md5
+      md5: bd3403be117c006798f010c968b74269
+      size: 110771
+    - path: Data/processed/y_test.csv
+      hash: md5
+      md5: 2e66d8c3c94231ddf9fab50a84d50563
+      size: 967
+    - path: Models/
+      hash: md5
+      md5: 71a56af02016eb100c15ce14d9f822f0.dir
+      size: 487267
+      nfiles: 1
+    - path: src/stages/evaluate.py
+      hash: md5
+      md5: d09aa942688030a3e932a1b8d1d2a977
+      size: 6148
+    outs:
+    - path: reports/confusion_matrix.png
+      hash: md5
+      md5: f129b5463937d37a09ebe95f3712fc9f
+      size: 211438
+    - path: reports/confusion_matrix_data.csv
+      hash: md5
+      md5: 1fe49831778c682da54ef5e7c1f664be
+      size: 3952
+    - path: reports/metrics.json
+      hash: md5
+      md5: e01adc14222083fafbdd34ecf47c087a
+      size: 67

@@ -44,7 +44,7 @@ stages:
     cmd: python src/stages/evaluate.py --config=params.yaml
     deps:
       - src/stages/evaluate.py
-      - Saved models/model/
+      - Models/
       - Data/processed/X_test.csv
       - Data/processed/y_test.csv
     plots:
