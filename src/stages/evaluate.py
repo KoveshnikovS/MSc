@@ -71,7 +71,7 @@ def evaluate_model(config_path: Text) -> None:
     
     
 
-    classes=['Healthy','1BRB','2BRB','3BRB']
+    classes=['Healthy','1BRB','2BRB','3BRB','4BRB']
     options = [("Confusion matrix, {0}".format(config['train']['estimator_name']), None, 0),
                ("Normalized confusion matrix, {0}".format(config['train']['estimator_name']), 'true', 1)]
     fig, axes = plt.subplots(1, 2, figsize=(15, 5))  # Create subplots (1 row, 2 columns)
@@ -100,14 +100,31 @@ def evaluate_model(config_path: Text) -> None:
     # save metrics file
     reports_folder = Path(config['evaluate']['reports_dir'])
     metrics_path = reports_folder / config['evaluate']['metrics_file']
-    json.dump(
-        obj={'f1_score': report['f1'],
-             'crossentropy': report['crossentropy']
-             },
-        fp=open(metrics_path, 'w')
-    )
+    try:
+        json.dump(
+            obj={'f1_score': report['f1'],
+                 'crossentropy': report['crossentropy']
+                 },
+            fp=open(metrics_path, 'w')
+        )
+    except:
+        json.dump(
+            obj={'f1_score': report['f1'],
+                 'crossentropy': report['crossentropy']
+                 },
+            fp=open(metrics_path, 'x')
+        )
     #save to exp_results.json
-    f=open("C:/Users/Semen Koveshnikov/Thesis/Model/reports/exp_results.json")
+    try:
+        f=open(reports_folder / "exp_results.json",'r')
+    except:
+        json.dump(
+            obj={'exp_name':[],
+                'f1': [],
+                 'crossentropy': []
+                 },
+            fp=open(reports_folder / "exp_results.json", 'x')
+        )
     exp_results=json.load(f)
     f.close()
     exp_results["f1"].append(round(report['f1'],3))
@@ -115,7 +132,7 @@ def evaluate_model(config_path: Text) -> None:
     exp_results["exp_name"].append(config["data_split"]["load_exclude"])
     json.dump(
         exp_results,
-        fp=open("C:/Users/Semen Koveshnikov/Thesis/Model/reports/exp_results.json", 'w')
+        fp=open(reports_folder / "exp_results.json", 'w')
     )
     logger.info(f'F1 metrics file saved to : {metrics_path}')
 
