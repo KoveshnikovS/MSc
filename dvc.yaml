@@ -8,6 +8,7 @@ stages:
       - features.fft_window_func
       - features.fft_window_size
       - features.fft_window_num
+      - features.names
     outs:
       - Data/raw/dataset.csv
 

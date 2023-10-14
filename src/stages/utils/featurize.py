@@ -1,10 +1,10 @@
 import pandas as pd
 import numpy as np
-from scipy.stats import kurtosis, skew, median_abs_deviation, iqr
+from scipy.stats import kurtosis, skew, median_abs_deviation
 from scipy.fft import fft
-from scipy.stats.mstats import idealfourths
 
-def featurize(data: np.ndarray, window:np.ndarray, state: int, loading: float) -> pd.DataFrame:
+def featurize(data: np.ndarray, window:np.ndarray,
+             names: np.ndarray, state: int, loading: float) -> pd.DataFrame:
     """ ## Calculate features
     This method calulates features from the passed window of current signal.\n 
     ### Parameters:
@@ -43,6 +43,11 @@ def featurize(data: np.ndarray, window:np.ndarray, state: int, loading: float) -
         'Label': state,
         'Loading': loading
     }
+    features_dict={'Label':d['Label'],
+                   'Loading':d['Loading']}
+    for feature in names:
+        if feature in d.keys():
+            features_dict[feature]=d.pop(feature)
     #features added to df
-    features_df=pd.DataFrame(data=d)
+    features_df=pd.DataFrame(data=features_dict)
     return features_df

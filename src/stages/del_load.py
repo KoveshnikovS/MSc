@@ -25,7 +25,7 @@ def del_load(config_path: Text) -> None:
     with open(config_path) as conf_file:
         config = yaml.safe_load(conf_file)
 
-    logger = get_logger('DATA_LOAD', log_level=config['base']['log_level'])
+    logger = get_logger('DATA', log_level=config['base']['log_level'])
 
     logger.info('Get dataset')
 

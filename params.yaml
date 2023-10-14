@@ -2,16 +2,35 @@ base:
 # basis vars
   random_state: 0
   log_level: INFO
-  grid_frequency: 60 #motor supply frequency
+  grid_frequency: 60 #Hz, motor supply frequency
 
 features:
   fft_window_func: None   #['None','blackman','hamming','hanning','flattop']
   fft_window_size: 20 #int cycles in 1 fft_window 
   fft_window_num: 40 #int number of fft_windows, i.e. datapoints per dataset per experiment 
-
+  names: ['T_mean', #features to include in the dataset
+        'T_median',
+        'T_kurtosis',
+        'T_skewness',
+        'F_med_abs_dev',
+        'F_median',
+        'F_kurtosis',
+        'F_skewness',
+        'T_std',
+        'T_med_abs_dev',
+        'T_mean_abs_dev',
+        'T_sum_abs',
+        'T_max_abs',
+        'T_sqrt_sum_abs_sqr',
+        'F_mean',
+        'F_std',
+        'F_mean_abs_dev',
+        'F_sum_abs',
+        'F_max_abs',
+        'F_sqrt_sum_abs_sqr',]
 data:
 # data IOs
-  features: Data/raw/dataset.csv   # dataset with features+load levels+lables to load
+  features: Data/raw/dataset.csv # dataset with features + load levels + motor state label
 
 data_split:
 # sets for data split and modifications
@@ -20,7 +39,7 @@ data_split:
   X_testset_path: Data/processed/X_test.csv
   y_testset_path: Data/processed/y_test.csv
   test_size: 0.2
-  load_exclude: []
+  load_exclude: [0.125,.75] #can be excluded [0.125,0.25,0.375,0.5,0.625,0.75,0.875,1]
 
 train:
 # training params

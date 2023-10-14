@@ -62,11 +62,12 @@ def featuring(config_path: Text) -> None:
     logger.info('Create features')
     #fft
     dataset=pd.DataFrame()
-    states=[0,1,2,3,4]
-    load_levels=[0.125,.25,.375,.50,.625,.75,.875,1]
+    states=[0,1,2,3,4] #number of BRB
+    load_levels=[0.125,.25,.375,.50,.625,.75,.875,1] #loading levels of motor
     F_s=config['base']['grid_frequency'] #grid frequency
     window_num=config['features']['fft_window_num']
     window_size=config['features']['fft_window_size']
+    feature_names=config['features']['names']
     i=0
     for state in states:
         j=0
@@ -77,7 +78,7 @@ def featuring(config_path: Text) -> None:
                         window=1
                     else:
                         window=windowing[windowing_func_name](len(data))
-                    features=featurize(data,window,state,level)
+                    features=featurize(data,window,feature_names,state,level)
                     dataset=pd.concat([dataset,features],axis=0)
                 j+=1
         i+=1
