@@ -16,7 +16,7 @@ The repository contains the source code in /src folder, where the pipeline stage
 
 ## Instructions
 
-Clone the repository to your local machine. Install DVC extension to MS VSCode from the extensions store. Then follow the instructions in the extension to enable DVC experiments, creating a virtual environment for running the tests. The *requirements.txt contains the necessary libraries needed for the project. They will be automatically installed by DVC during the setup, or install them yourself using pip:
+Clone the repository to your local machine. Install DVC extension to MS VSCode from the extensions store. Then follow the instructions in the extension to enable DVC experiments, creating a virtual environment for running the tests. The *requirements.txt* contains the necessary libraries needed for the project. They will be automatically installed by DVC during the setup, or install them yourself using pip:
 
 ```cmd
 pip install -r requirements.txt
