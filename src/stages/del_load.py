@@ -30,21 +30,32 @@ def del_load(config_path: Text) -> None:
     logger.info('Get dataset')
 
     X_wo_load=pd.read_csv(config['data']['features'])
+
+    X_train_path=config['data_split']['X_trainset_path']
+    y_train_path=config['data_split']['y_trainset_path']
+    load_train_path=config['data_split']['load_train_path']
+    load_test_path=config['data_split']['load_test_path']
+    X_test_path=config['data_split']['X_testset_path']
+    y_test_path=config['data_split']['y_testset_path']
+
     if len(config['data_split']['load_exclude'])==0:
-        X=X_wo_load.drop(columns=['Loading','Label']).copy()
+        X=X_wo_load.drop(columns=['Label']).copy()
         y=X_wo_load['Label'].copy()
         X_train, X_test,y_train, y_test = train_test_split(X,y,
                                                     test_size=config['data_split']['test_size'],
                                                     random_state=config['base']['random_state'])
         logger.info('Save train and test sets')
-        X_train_path=config['data_split']['X_trainset_path']
-        y_train_path=config['data_split']['y_trainset_path']
-        X_test_path=config['data_split']['X_testset_path']
-        y_test_path=config['data_split']['y_testset_path']
+        
+        load_train=X_train['Loading'].copy()
+        load_test=X_test['Loading'].copy()
+        X_train.drop(columns=['Loading'],inplace=True)
+        X_test.drop(columns=['Loading'],inplace=True)
         X_train.to_csv(X_train_path,index=False)
         y_train.to_csv(y_train_path,index=False)
         X_test.to_csv(X_test_path,index=False)
         y_test.to_csv(y_test_path,index=False)
+        load_train.to_csv(load_train_path,index=False)
+        load_test.to_csv(load_test_path,index=False)
         logger.info('Saved')
     else:
         logger.info(X_wo_load.columns)
@@ -59,8 +70,8 @@ def del_load(config_path: Text) -> None:
         y_load=X_load['Label']
         X_wo_load=X_wo_load.drop(columns=['Label']).copy()
 
-        X_wo_load=X_wo_load.drop(columns=['Loading']).copy()
-        X_load=X_load.drop(columns=['Loading']).copy()
+        # X_wo_load=X_wo_load.drop(columns=['Loading']).copy()
+        # X_load=X_load.drop(columns=['Loading']).copy()
         X_load=X_load.drop(columns=['Label']).copy()
 
         logger.info('Split features into train and test sets')
@@ -72,16 +83,19 @@ def del_load(config_path: Text) -> None:
         X_test_wo_load=pd.concat([X_test_wo_load,X_load],axis=0)
         y_test_wo_load=pd.concat([y_test_wo_load,y_load],axis=0)
 
+
+        load_train=X_train_wo_load['Loading'].copy()
+        load_test=X_test_wo_load['Loading'].copy()
+        X_train_wo_load.drop(columns=['Loading'],inplace=True)
+        X_test_wo_load.drop(columns=['Loading'],inplace=True)
         #save
         logger.info('Save train and test sets')
-        X_train_path=config['data_split']['X_trainset_path']
-        y_train_path=config['data_split']['y_trainset_path']
-        X_test_path=config['data_split']['X_testset_path']
-        y_test_path=config['data_split']['y_testset_path']
         X_train_wo_load.to_csv(X_train_path,index=False)
         y_train_wo_load.to_csv(y_train_path,index=False)
         X_test_wo_load.to_csv(X_test_path,index=False)
         y_test_wo_load.to_csv(y_test_path,index=False)
+        load_train.to_csv(load_train_path,index=False)
+        load_test.to_csv(load_test_path,index=False)
         logger.info('Saved')
 
 

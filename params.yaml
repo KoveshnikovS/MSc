@@ -38,13 +38,15 @@ data_split:
   y_trainset_path: Data/processed/y_train.csv
   X_testset_path: Data/processed/X_test.csv
   y_testset_path: Data/processed/y_test.csv
+  load_train_path: Data/processed/load_train.csv
+  load_test_path: Data/processed/load_test.csv
   test_size: 0.2
   load_exclude: [0.125,.75] #can be excluded [0.125,0.25,0.375,0.5,0.625,0.75,0.875,1]
 
 train:
 # training params
   cv: 5
-  estimator_name: DL_reg   # define estimator name ['SVC', 'GBC', 'DL','DL_reg']
+  estimator_name: SVC   # define estimator name ['SVC', 'GBC', 'DL','DL_reg']
   model_path: Models/model.joblib   # define path, where model saved
   gridCV_file: best_hp.json   # best params of grid search
   estimators:

@@ -13,20 +13,24 @@ stages:
       - Data/raw/dataset.csv
 
   Data: # delete ceratain level from training set
-    always_changed: True
     cmd: python src/stages/del_load.py --config=params.yaml
     deps:
       - src/stages/del_load.py
     params:
       - data_split.load_exclude
+      - features.fft_window_func
+      - features.fft_window_size
+      - features.fft_window_num
+      - features.names
     outs:
       - Data/processed/X_train.csv
       - Data/processed/y_train.csv
       - Data/processed/X_test.csv
       - Data/processed/y_test.csv
+      - Data/processed/load_train.csv
+      - Data/processed/load_test.csv
 
   Training: # model training
-    always_changed: True
     cmd: python src/stages/train.py --config=params.yaml
     deps:
       - src/stages/train.py
@@ -34,9 +38,15 @@ stages:
       - Data/processed/y_train.csv
       - Data/processed/X_test.csv
       - Data/processed/y_test.csv
+      - Data/processed/load_train.csv
+      - Data/processed/load_test.csv
     params:
       - train.estimator_name
       - data_split.load_exclude
+      - features.fft_window_func
+      - features.fft_window_size
+      - features.fft_window_num
+      - features.names
     metrics:
       - reports/best_hp.json
 
