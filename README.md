@@ -21,13 +21,3 @@ Clone the repository to your local machine. Install DVC extension to MS VSCode f
 ```cmd
 pip install -r requirements.txt
 ```
-
-When you have cloned the project to your machine, manually create the following folders:
-
-```python
-/Data
-    /raw
-    /processed
-/Models
-```
-
