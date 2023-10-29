@@ -21,3 +21,4 @@ Clone the repository to your local machine. Install DVC extension to MS VSCode f
 ```cmd
 pip install -r requirements.txt
 ```
+After that, you can visit FFT notebook and look at the instructions there. Then also peak into Feature importance and Results inspection notebooks and start experimenting with the models and data yourself.
