@@ -1,11 +1,5 @@
 # Machine Learning Methods for Induction Motor Fault Detection
 
-<style>
-td, th {
-   border: none!important;
-}
-</style>
-
 ![Aalto logo](/images/Logo.png)<br>
 **Master's Thesis**<br>
 
