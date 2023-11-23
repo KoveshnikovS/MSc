@@ -5,93 +5,182 @@ stages:
     deps:
     - path: src/stages/features.py
       hash: md5
-      md5: eab634ef0f0de4d39ec5077c3432cd57
-      size: 3250
+      md5: 5b6943cd952e1d295c975f337b697bc7
+      size: 3351
     params:
       params.yaml:
         features.fft_window_func: None
         features.fft_window_num: 40
         features.fft_window_size: 20
+        features.names:
+        - T_mean
+        - T_median
+        - T_kurtosis
+        - T_skewness
+        - F_med_abs_dev
+        - F_median
+        - F_kurtosis
+        - F_skewness
+        - T_std
+        - T_med_abs_dev
+        - T_mean_abs_dev
+        - T_sum_abs
+        - T_max_abs
+        - T_sqrt_sum_abs_sqr
+        - F_mean
+        - F_std
+        - F_mean_abs_dev
+        - F_sum_abs
+        - F_max_abs
+        - F_sqrt_sum_abs_sqr
     outs:
     - path: Data/raw/dataset.csv
       hash: md5
-      md5: 342a9a5193de1cb8500437e26d3195b9
+      md5: ae3c2205c78d268399c1d63f9eba579f
       size: 576337
   Data:
     cmd: python src/stages/del_load.py --config=params.yaml
     deps:
     - path: src/stages/del_load.py
       hash: md5
-      md5: c5e8e68fd674043ffb47d870300684c8
-      size: 4332
+      md5: 908978d9512ea3d5d8f780c7e242759c
+      size: 4851
     params:
       params.yaml:
-        data_split.load_exclude: []
+        data_split.load_exclude:
+        - 0.125
+        - 0.75
+        features.fft_window_func: None
+        features.fft_window_num: 40
+        features.fft_window_size: 20
+        features.names:
+        - T_mean
+        - T_median
+        - T_kurtosis
+        - T_skewness
+        - F_med_abs_dev
+        - F_median
+        - F_kurtosis
+        - F_skewness
+        - T_std
+        - T_med_abs_dev
+        - T_mean_abs_dev
+        - T_sum_abs
+        - T_max_abs
+        - T_sqrt_sum_abs_sqr
+        - F_mean
+        - F_std
+        - F_mean_abs_dev
+        - F_sum_abs
+        - F_max_abs
+        - F_sqrt_sum_abs_sqr
     outs:
     - path: Data/processed/X_test.csv
       hash: md5
-      md5: bd3403be117c006798f010c968b74269
-      size: 110771
+      md5: e01141fd9381a2c44a6abf46b760e43f
+      size: 221290
     - path: Data/processed/X_train.csv
       hash: md5
-      md5: 893a2433c3aafebcc1c65013904df166
-      size: 442368
+      md5: 422e24b9b3410861fd83aeecf98e7b5b
+      size: 331849
+    - path: Data/processed/load_test.csv
+      hash: md5
+      md5: 759b0d4cab9ff264c7283cb18e6c57ac
+      size: 4088
+    - path: Data/processed/load_train.csv
+      hash: md5
+      md5: 2e3bdeef1b9d0845b06716873816b848
+      size: 5930
     - path: Data/processed/y_test.csv
       hash: md5
-      md5: 2e66d8c3c94231ddf9fab50a84d50563
-      size: 967
+      md5: 5f6fbe887fb2112a50883ea5d7cf50dd
+      size: 1927
     - path: Data/processed/y_train.csv
       hash: md5
-      md5: cae16f39e5ded9cab2acfcd2ffb9fc6f
-      size: 3847
+      md5: 5e40538629d707ae84f62b7755db6175
+      size: 2887
   Training:
     cmd: python src/stages/train.py --config=params.yaml
     deps:
     - path: Data/processed/X_test.csv
       hash: md5
-      md5: bd3403be117c006798f010c968b74269
-      size: 110771
+      md5: e01141fd9381a2c44a6abf46b760e43f
+      size: 221290
     - path: Data/processed/X_train.csv
       hash: md5
-      md5: 893a2433c3aafebcc1c65013904df166
-      size: 442368
+      md5: 422e24b9b3410861fd83aeecf98e7b5b
+      size: 331849
+    - path: Data/processed/load_test.csv
+      hash: md5
+      md5: 759b0d4cab9ff264c7283cb18e6c57ac
+      size: 4088
+    - path: Data/processed/load_train.csv
+      hash: md5
+      md5: 2e3bdeef1b9d0845b06716873816b848
+      size: 5930
     - path: Data/processed/y_test.csv
       hash: md5
-      md5: 2e66d8c3c94231ddf9fab50a84d50563
-      size: 967
+      md5: 5f6fbe887fb2112a50883ea5d7cf50dd
+      size: 1927
     - path: Data/processed/y_train.csv
       hash: md5
-      md5: cae16f39e5ded9cab2acfcd2ffb9fc6f
-      size: 3847
+      md5: 5e40538629d707ae84f62b7755db6175
+      size: 2887
     - path: src/stages/train.py
       hash: md5
       md5: 66d0851c3b7605ba80e5d57f2f02009a
       size: 3361
     params:
       params.yaml:
-        data_split.load_exclude: []
-        train.estimator_name: DL_reg
+        data_split.load_exclude:
+        - 0.125
+        - 0.75
+        features.fft_window_func: None
+        features.fft_window_num: 40
+        features.fft_window_size: 20
+        features.names:
+        - T_mean
+        - T_median
+        - T_kurtosis
+        - T_skewness
+        - F_med_abs_dev
+        - F_median
+        - F_kurtosis
+        - F_skewness
+        - T_std
+        - T_med_abs_dev
+        - T_mean_abs_dev
+        - T_sum_abs
+        - T_max_abs
+        - T_sqrt_sum_abs_sqr
+        - F_mean
+        - F_std
+        - F_mean_abs_dev
+        - F_sum_abs
+        - F_max_abs
+        - F_sqrt_sum_abs_sqr
+        train.estimator_name: SVC
     outs:
     - path: reports/best_hp.json
       hash: md5
-      md5: e9a0e4c40b5a91f8be67c44af4cb4418
-      size: 15
+      md5: eec206833c5cdc1bc123c53d70a04757
+      size: 100
   Evaluation:
     cmd: python src/stages/evaluate.py --config=params.yaml
     deps:
     - path: Data/processed/X_test.csv
       hash: md5
-      md5: bd3403be117c006798f010c968b74269
-      size: 110771
+      md5: e01141fd9381a2c44a6abf46b760e43f
+      size: 221290
     - path: Data/processed/y_test.csv
       hash: md5
-      md5: 2e66d8c3c94231ddf9fab50a84d50563
-      size: 967
+      md5: 5f6fbe887fb2112a50883ea5d7cf50dd
+      size: 1927
     - path: Models/
       hash: md5
-      md5: 71a56af02016eb100c15ce14d9f822f0.dir
-      size: 487267
-      nfiles: 1
+      md5: 98a35d8d840640344806798dca17d44d.dir
+      size: 581850
+      nfiles: 2
     - path: src/stages/evaluate.py
       hash: md5
       md5: d09aa942688030a3e932a1b8d1d2a977
@@ -99,13 +188,13 @@ stages:
     outs:
     - path: reports/confusion_matrix.png
       hash: md5
-      md5: f129b5463937d37a09ebe95f3712fc9f
-      size: 211438
+      md5: 97b690e3f9729d50b58ddb0610d14b5d
+      size: 249491
     - path: reports/confusion_matrix_data.csv
       hash: md5
-      md5: 1fe49831778c682da54ef5e7c1f664be
-      size: 3952
+      md5: eeef57af0ba9c2eb7d4439881c19f660
+      size: 7688
     - path: reports/metrics.json
       hash: md5
-      md5: e01adc14222083fafbdd34ecf47c087a
-      size: 67
+      md5: 1874c82feb704583868d84bf8a5c0b63
+      size: 68
