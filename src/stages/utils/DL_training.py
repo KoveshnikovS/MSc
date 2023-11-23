@@ -72,7 +72,7 @@ def DL_train(df_X_train: pd.DataFrame,df_y_train:pd.DataFrame,
                                                   restore_best_weights=stoppings['restore_best_weights'],
                                                   start_from_epoch=stoppings['start_epoch'])
     history=classifier.fit(df_X_train,df_y_train,
-                  validation_data=(df_X_test,df_y_test),
+                  validation_split=0.2,
                   batch_size=fit_hp['batch_size'],
                   epochs=fit_hp['epochs'],
                   callbacks=[early_stoppings],

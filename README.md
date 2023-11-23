@@ -1,7 +1,13 @@
-![](/Logo.png)<br>
-**Master's Thesis**<br>
-
 # Machine Learning Methods for Induction Motor Fault Detection
+
+<style>
+td, th {
+   border: none!important;
+}
+</style>
+
+![Aalto logo](/images/Logo.png)<br>
+**Master's Thesis**<br>
 
 **Author** Semen Koveshnikov<br>
 **Programme** Automation and Electrical Engineering<br>
@@ -21,3 +27,30 @@ Clone the repository to your local machine. Install DVC extension to MS VSCode f
 ```cmd
 pip install -r requirements.txt
 ```
+
+## Functionality
+
+The ML pipeline parameters are placed in `params.yaml` file, in which it is possible, for example, to choose the type of ML algorithm you want to explore or FFT windowing parameters. The pipeline comprises four stages defined in `dvc.yaml` file. 
+
+```mermaid
+
+---
+title: DVC Pipeline
+---
+flowchart LR
+    A[Features] --> B[Data]
+    B --> C[Training]
+    C --> D[Evaluation]
+```
+
+With the current version the influence of FFT windowing function and cycle number per FFT window can be explored. The motor phase current frequency spectrum visibility changes with different windowing functions, as shown below, which might be used for improvements in ML accuracy predictions
+
+⠀|⠀
+:---------:|:-------------:
+![Rectangular window](/images/Uniform_windowing.png) |![Hanning window](/images/Hanning_windowing.png)
+
+Also, the visibility of side-bands differs with different number of cyces per window, as presented in figure below.
+
+⠀|⠀
+:---------:|:-------------:
+![Hanning window, 20 cycles](/images/20_cycles.png) |![Hanning window, 70 cycles](/images/70_cycles.png)

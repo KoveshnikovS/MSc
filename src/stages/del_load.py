@@ -70,8 +70,6 @@ def del_load(config_path: Text) -> None:
         y_load=X_load['Label']
         X_wo_load=X_wo_load.drop(columns=['Label']).copy()
 
-        # X_wo_load=X_wo_load.drop(columns=['Loading']).copy()
-        # X_load=X_load.drop(columns=['Loading']).copy()
         X_load=X_load.drop(columns=['Label']).copy()
 
         logger.info('Split features into train and test sets')
