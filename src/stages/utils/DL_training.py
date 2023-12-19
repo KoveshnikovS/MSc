@@ -63,8 +63,7 @@ def DL_train(df_X_train: pd.DataFrame,df_y_train:pd.DataFrame,
     classifier.compile(
     optimizer=keras.optimizers.Adam(1e-3),
     loss='SparseCategoricalCrossentropy',
-    metrics=['SparseCategoricalAccuracy',
-             'SparseCategoricalCrossentropy'],
+    metrics=['SparseCategoricalAccuracy'],
              jit_compile=True)
 
     early_stoppings=keras.callbacks.EarlyStopping(min_delta=stoppings['min_delta'],
