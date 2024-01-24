@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Koveshnikov"
+  given-names: "Semen"
+  orcid: "https://orcid.org/0009-0008-8291-4434"
+title: "Motor fault detection using machine learning: broken rotor bar case."
+version: 1.0.0
+date-released: 2023-11-23
+url: "https://github.com/KoveshnikovS/Motor_fault_detection_BRB"
